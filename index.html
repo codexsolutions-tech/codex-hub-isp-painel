@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HUB ISP · Painel do Provedor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ==================== TELA: AUTENTICAÇÃO ==================== -->
+<div id="tela-auth" class="auth-stage">
+  <div class="auth-box">
+    <div class="auth-brand">
+      <div class="auth-logo">◈</div>
+      <div>
+        <div class="auth-brand-nome">hub<span>ISP</span></div>
+        <div class="auth-brand-sub">PAINEL DO PROVEDOR</div>
+      </div>
+    </div>
+
+    <!-- ---- LOGIN ---- -->
+    <form id="form-login" class="auth-form">
+      <h1>Acesse sua conta</h1>
+      <p class="auth-lead">Entre com o usuário e senha do seu provedor.</p>
+
+      <label class="fld-label">Código do provedor</label>
+      <input class="fld" id="login-codigo-provedor" placeholder="ex.: 1" inputmode="numeric" required />
+      <div class="fld-help">O código gerado no seu cadastro. Fica visível na aba "Provedor" do painel.</div>
+
+      <label class="fld-label">Usuário</label>
+      <input class="fld" id="login-usuario" placeholder="ex.: admin.suaempresa" autocomplete="username" required />
+
+      <label class="fld-label">Senha</label>
+      <input class="fld" id="login-senha" type="password" placeholder="••••••••" autocomplete="current-password" required />
+
+      <div class="fld-erro" id="login-erro"></div>
+
+      <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+      <button type="button" class="btn-link" id="ir-cadastro">Ainda não tenho provedor cadastrado</button>
+      <button type="button" class="btn-link btn-link-sutil" id="usar-demo">Usar acesso de demonstração</button>
+    </form>
+
+    <!-- ---- CADASTRO INICIAL ---- -->
+    <form id="form-cadastro" class="auth-form hidden">
+      <h1>Cadastrar provedor</h1>
+      <p class="auth-lead">Preencha os dados obrigatórios para criar seu acesso. Você completa o restante depois, no painel.</p>
+
+      <label class="fld-label">Empresa <span class="req">*</span></label>
+      <input class="fld" id="cad-empresa" placeholder="Razão social da empresa" required />
+
+      <div class="fld-row">
+        <div>
+          <label class="fld-label">Gerenciador <span class="req">*</span></label>
+          <select class="fld" id="cad-gerenciador" required>
+            <option value="" disabled selected>Selecione…</option>
+            <option value="RECEITANET">RECEITANET</option>
+            <option value="IXCSOFT">IXCSOFT</option>
+          </select>
+        </div>
+        <div>
+          <label class="fld-label">CNPJ <span class="req">*</span></label>
+          <input class="fld" id="cad-cnpj" placeholder="00.000.000/0000-00" inputmode="numeric" required />
+        </div>
+      </div>
+
+      <label class="fld-label">Nome do administrador <span class="req">*</span></label>
+      <input class="fld" id="cad-admin" placeholder="Nome completo" required />
+
+      <div class="fld-row">
+        <div>
+          <label class="fld-label">Usuário <span class="req">*</span></label>
+          <input class="fld" id="cad-usuario" placeholder="ex.: admin.suaempresa" autocomplete="username" required />
+        </div>
+        <div>
+          <label class="fld-label">Senha <span class="req">*</span></label>
+          <input class="fld" id="cad-senha" type="password" placeholder="mín. 6 caracteres" autocomplete="new-password" required />
+        </div>
+      </div>
+
+      <div class="fld-erro" id="cadastro-erro"></div>
+
+      <button type="submit" class="btn btn-primary btn-block">Criar cadastro e acessar o painel</button>
+      <button type="button" class="btn-link" id="ir-login">Já tenho provedor cadastrado</button>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== PAINEL ==================== -->
+<div id="tela-painel" class="painel hidden">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="auth-logo auth-logo-sm">◈</div>
+      <div>
+        <div class="auth-brand-nome sm">hub<span>ISP</span></div>
+        <div class="auth-brand-sub">PAINEL</div>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <button class="side-item active" data-tab="provedor">
+        <span class="side-ico">🏢</span> Provedor
+      </button>
+      <button class="side-item" data-tab="tema">
+        <span class="side-ico">🎨</span> Tema
+      </button>
+      <button class="side-item" data-tab="banners">
+        <span class="side-ico">🖼️</span> Banners
+      </button>
+      <button class="side-item" data-tab="anuncios">
+        <span class="side-ico">📢</span> Anúncios
+      </button>
+      <button class="side-item" data-tab="indicacoes">
+        <span class="side-ico">🎁</span> Indicações
+      </button>
+      <button class="side-item" data-tab="avaliacoes">
+        <span class="side-ico">⭐</span> Avaliações
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="side-provedor" id="side-provedor-nome">—</div>
+      <button class="btn-link btn-sair" id="btn-sair">Sair</button>
+    </div>
+  </aside>
+
+  <main class="conteudo">
+    <header class="topbar">
+      <div>
+        <div class="topbar-titulo" id="topbar-titulo">Dados do provedor</div>
+        <div class="topbar-sub" id="topbar-sub">Informações cadastrais e credenciais do gerenciador</div>
+      </div>
+      <div class="topbar-status" id="topbar-status">ATIVO</div>
+    </header>
+
+    <div class="tabs-body">
+
+      <!-- ---- TAB: PROVEDOR ---- -->
+      <section class="tab-panel" id="tab-provedor">
+        <div class="grid-2">
+          <div class="painel-card">
+            <div class="card-titulo">Dados cadastrais</div>
+
+            <label class="fld-label">Empresa</label>
+            <input class="fld" id="p-empresa" />
+
+            <label class="fld-label">Nome fantasia</label>
+            <input class="fld" id="p-nome-fantasia" placeholder="Como o provedor é conhecido" />
+
+            <div class="fld-row">
+              <div>
+                <label class="fld-label">CNPJ</label>
+                <input class="fld" id="p-cnpj" />
+              </div>
+              <div>
+                <label class="fld-label">Nome do administrador</label>
+                <input class="fld" id="p-admin" />
+              </div>
+            </div>
+
+            <div class="fld-row">
+              <div>
+                <label class="fld-label">Status</label>
+                <select class="fld" id="p-status" disabled>
+                  <option value="ATIVO">ATIVO</option>
+                  <option value="INATIVO">INATIVO</option>
+                  <option value="SUSPENSO">SUSPENSO</option>
+                </select>
+              </div>
+              <div>
+                <label class="fld-label">Código do provedor</label>
+                <input class="fld" id="p-codigo-provedor" disabled />
+              </div>
+            </div>
+          </div>
+
+          <div class="painel-card">
+            <div class="card-titulo">Integração com o gerenciador</div>
+
+            <label class="fld-label">Gerenciador</label>
+            <select class="fld" id="p-gerenciador">
+              <option value="RECEITANET">RECEITANET</option>
+              <option value="IXCSOFT">IXCSOFT</option>
+            </select>
+
+            <div class="fld-row">
+              <div>
+                <label class="fld-label">Código API gerenciador</label>
+                <input class="fld" id="p-codigo-api" placeholder="ex.: 128" inputmode="numeric" />
+              </div>
+              <div>
+                <label class="fld-label">Domínio IXC</label>
+                <input class="fld" id="p-dominio-ixc" placeholder="ex.: suaempresa.ixcsoft.com.br" />
+                <div class="fld-help">Caso gerenciador seja IXCSOFT</div>
+              </div>
+            </div>
+
+            <label class="fld-label">Chave API gerenciador</label>
+            <div class="fld-chave">
+              <input class="fld" id="p-chave-api" type="password" placeholder="Token de integração" />
+              <button type="button" class="btn-ico" id="toggle-chave" title="Mostrar/ocultar">👁️</button>
+            </div>
+            <div class="fld-help">Usada para o app buscar faturas, consumo e dados cadastrais do cliente.</div>
+          </div>
+        </div>
+
+        <div class="acoes-fixas">
+          <span class="salvo-em" id="salvo-provedor"></span>
+          <button class="btn btn-primary" id="salvar-provedor">Salvar alterações</button>
+        </div>
+      </section>
+
+      <!-- ---- TAB: TEMA ---- -->
+      <section class="tab-panel hidden" id="tab-tema">
+        <div class="grid-2">
+          <div class="painel-card">
+            <div class="card-titulo">Identidade visual</div>
+
+            <label class="fld-label">Tag (frase da marca)</label>
+            <input class="fld" id="t-tag" placeholder="ex.: Internet Fibra" />
+
+            <div class="fld-row">
+              <div>
+                <label class="fld-label">Cor principal (accent)</label>
+                <div class="fld-cor">
+                  <input type="color" id="t-accent-picker" />
+                  <input class="fld" id="t-accent" placeholder="#DB5F00" />
+                </div>
+              </div>
+              <div>
+                <label class="fld-label">Cor secundária (accent2)</label>
+                <div class="fld-cor">
+                  <input type="color" id="t-accent2-picker" />
+                  <input class="fld" id="t-accent2" placeholder="#DB5FFF" />
+                </div>
+              </div>
+            </div>
+
+            <label class="fld-label">URL da logomarca</label>
+            <input class="fld" id="t-logo" placeholder="https://…/logotipo.png" />
+
+            <label class="fld-label">Glifo (ícone alternativo à logo)</label>
+            <input class="fld" id="t-glyph" maxlength="2" placeholder="◈ (opcional, 1 caractere)" />
+            <div class="fld-help">Usado quando não há logo carregada — aparece no header e na tela de login do app.</div>
+          </div>
+
+          <div class="painel-card preview-card">
+            <div class="card-titulo">Pré-visualização no app</div>
+            <div class="phone-mock">
+              <div class="phone-header" id="prev-header">
+                <div class="phone-logo" id="prev-logo">◈</div>
+                <div>
+                  <div class="phone-titulo" id="prev-nome">Sua Empresa</div>
+                  <div class="phone-sub" id="prev-tag">Internet Fibra</div>
+                </div>
+              </div>
+              <div class="phone-card" id="prev-plano">
+                <div class="phone-plano-label">SEU PLANO</div>
+                <div class="phone-plano-nome">200 Mega</div>
+                <div class="phone-plano-preco">R$ 74,90/mês</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acoes-fixas">
+          <span class="salvo-em" id="salvo-tema"></span>
+          <button class="btn btn-primary" id="salvar-tema">Salvar tema</button>
+        </div>
+      </section>
+
+      <!-- ---- TAB: BANNERS ---- -->
+      <section class="tab-panel hidden" id="tab-banners">
+        <div class="lista-topo">
+          <div class="lista-desc">Aparecem no carrossel da tela inicial do app, na ordem cadastrada.</div>
+          <button class="btn btn-primary" id="novo-banner">+ Novo banner</button>
+        </div>
+        <div class="lista-grid" id="lista-banners"></div>
+      </section>
+
+      <!-- ---- TAB: ANUNCIOS ---- -->
+      <section class="tab-panel hidden" id="tab-anuncios">
+
+    <div class="lista-topo">
+        <div class="lista-desc">
+            Os anúncios aparecem em formato de carrossel na tela inicial do aplicativo.
+            Você pode cadastrar banners com imagem ou cards somente com texto.
+        </div>
+
+        <button class="btn btn-primary" id="novo-anuncio">
+            + Novo anúncio
+        </button>
+    </div>
+
+    <div class="lista-grid" id="lista-anuncios"></div>
+
+      </section>
+
+      <!-- ---- TAB: INDICAÇÕES ---- -->
+      <section class="tab-panel hidden" id="tab-indicacoes">
+
+        <div class="lista-topo">
+          <div class="lista-desc">
+            Consulte as indicações realizadas pelos clientes através do aplicativo.
+          </div>
+        </div>
+
+        <div class="painel-card">
+
+          <table class="table table-ligth table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Cliente</th>
+                <th scope="col">Indicado</th>
+                <th scope="col">Contato</th>
+                <th scope="col">Mensagem</th>
+              </tr>
+            </thead>
+
+            <tbody id="lista-indicacoes">
+
+              <tr class="tabela-vazia">
+                <td colspan="4">
+                  Nenhuma indicação encontrada.
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+      <!-- ---- TAB: AVALIAÇOES ---- -->
+       <section class="tab-panel hidden" id="tab-avaliacoes">
+
+        <div class="lista-topo">
+          <div class="lista-desc">
+            Consulte as avaliações realizadas pelos clientes através do aplicativo.
+          </div>
+        </div>
+
+        <div class="painel-card">
+
+          <table class="table table-ligth table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Cliente</th>
+                <th scope="col">Avaliação</th>
+                <th scope="col">Mensagem</th>
+                <th scope="col">Data da avaliação</th>
+              </tr>
+            </thead>
+
+            <tbody id="lista-avaliacoes">
+
+              <tr class="tabela-vazia">
+                <td colspan="4">
+                  Nenhuma avaliação encontrada.
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ==================== MODAL: BANNER ==================== -->
+<div class="modal-overlay hidden" id="modal-banner">
+  <div class="modal-box">
+    <div class="modal-titulo" id="modal-banner-titulo">Novo banner</div>
+
+    <label class="fld-label">Selo</label>
+    <input class="fld" id="mb-selo" placeholder="ex.: INDIQUE E GANHE" />
+
+    <label class="fld-label">Título</label>
+    <input class="fld" id="mb-titulo" placeholder="Título curto e direto" />
+
+    <label class="fld-label">Subtítulo</label>
+    <input class="fld" id="mb-subtitulo" placeholder="Complemento em uma linha" />
+
+    <div class="fld-row">
+      <div>
+        <label class="fld-label">Texto do botão (CTA)</label>
+        <input class="fld" id="mb-cta" placeholder="ex.: Indicar agora" />
+      </div>
+      <div>
+        <label class="fld-label">Emoji</label>
+        <input class="fld" id="mb-emoji" maxlength="4" placeholder="🎁" />
+      </div>
+    </div>
+
+    <div class="fld-row">
+      <div>
+        <label class="fld-label">Cor inicial</label>
+        <div class="fld-cor"><input type="color" id="mb-cor1-picker" /><input class="fld" id="mb-cor1" placeholder="#6C4CF1" /></div>
+      </div>
+      <div>
+        <label class="fld-label">Cor final</label>
+        <div class="fld-cor"><input type="color" id="mb-cor2-picker" /><input class="fld" id="mb-cor2" placeholder="#9B7BFF" /></div>
+      </div>
+    </div>
+
+    <label class="fld-label">Link de destino</label>
+    <input class="fld" id="mb-link" placeholder="https://… ou /app/faturas (rota interna)" />
+    <div class="fld-help">Deixe em branco se o banner é só informativo (sem ação de clique).</div>
+
+    <div class="modal-preview" id="mb-preview"></div>
+
+    <div class="modal-acoes">
+      <button class="btn btn-ghost" id="mb-cancelar">Cancelar</button>
+      <button class="btn btn-primary" id="mb-salvar">Salvar banner</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MODAL: ANUNCIO ==================== -->
+<div class="modal-overlay hidden" id="modal-anuncio">
+  
+  <div class="modal-box">
+    
+    <div class="modal-titulo" id="modal-anuncio-titulo">
+      Novo anúncio
+    </div>
+    
+    <label class="fld-label">Tipo do anúncio</label>
+    
+    <select class="fld" id="ma-tipo">
+      <option value="imagem">Banner com imagem</option>
+      <option value="texto">Card de texto</option>
+    </select>
+    
+    
+    <label class="fld-label">Subtítulo</label>
+    
+    <input
+    class="fld"
+    id="ma-subtitulo"
+    placeholder="Opcional"
+    />
+    
+    
+    <label class="fld-label">Título</label>
+    
+    <input
+    class="fld"
+    id="ma-titulo"
+    placeholder="Título do anúncio"
+    />
+    
+    
+    <label class="fld-label">Descrição</label>
+    
+    <textarea
+    class="fld"
+    id="ma-descricao"
+    rows="4"
+    placeholder="Descrição do anúncio"
+    ></textarea>
+    
+    
+    <label class="fld-label">Imagem (Banner)</label>
+    
+    <input
+    class="fld"
+    id="ma-imagem"
+    placeholder="https://..."
+    />
+    
+    <div class="fld-help">
+      Se deixar vazio será criado automaticamente um card de texto.
+    </div>
+    
+    
+    <label class="fld-label">Link de destino</label>
+    
+    <input
+    class="fld"
+    id="ma-link"
+    placeholder="https://... ou /app/rota"
+    />
+    
+    
+    <label class="fld-label">
+      Ativo
+    </label>
+    
+    <select class="fld" id="ma-ativo">
+      <option value="true">Sim</option>
+            <option value="false">Não</option>
+          </select>
+          
+          
+          <div class="modal-preview" id="ma-preview"></div>
+          
+          <div class="modal-acoes">
+            
+            <button
+            class="btn btn-ghost"
+            id="ma-cancelar"
+            >
+            Cancelar
+          </button>
+          
+          <button
+          class="btn btn-primary"
+          id="ma-salvar"
+          >
+          Salvar anúncio
+        </button>
+        
+      </div>
+      
+    </div>
+    
+  </div>
+  <!-- ==================== MODAL: INDICAÇÕES ==================== -->
+  
+  
+  
+  <div class="toast hidden" id="toast"></div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script src="js/format.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
