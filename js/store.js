@@ -3,7 +3,7 @@
 // "http://192.168.18.188:3010/v1",
 
 const CONFIG = {
-  API_BASE: "http://192.168.18.188:3010/v1",//"https://codex-hub-isp-api-production.up.railway.app/v1", 
+  API_BASE: "https://codex-hub-isp-api-production.up.railway.app/v1", 
   USE_API: true,
 
 };
