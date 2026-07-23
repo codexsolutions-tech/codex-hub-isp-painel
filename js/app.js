@@ -339,8 +339,19 @@
 
     const logoEl = $("#prev-logo");
     logoEl.style.background = accent;
-    if (logo) {
-      logoEl.innerHTML = `<img src="${escapeAttr(logo)}" alt="logo" onerror="this.parentElement.innerHTML='${escapeJs(glyph)}'" />`;
+    
+    const logoUrl = resolveImageUrl(logo);
+
+    console.log(logoUrl)
+
+    if (logoUrl && logoUrl.includes("drive.google.com")) {
+      logoEl.innerHTML = `
+        <img
+          src="${escapeAttr(logoUrl)}"
+          alt="logo"
+          onerror="this.parentElement.textContent='${escapeJs(glyph)}'"
+        />
+      `;
     } else {
       logoEl.textContent = glyph;
     }
